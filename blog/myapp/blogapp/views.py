@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .forms import LoginForm,RegisterForm,PostForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from .models import Post
 
 # Create your views here.
@@ -71,3 +72,8 @@ def update(request,id):
     else:
         form = PostForm(instance=mem)
         return render(request,'update.html',{'form':form,'mem':mem})
+    
+def post_list_by_user(request,username):
+    user = get_object_or_404(User,username=username)
+    posts = Post.objects.filter(author = user )
+    return render(request, 'posts_by_user.html', {'user': user, 'posts': posts})

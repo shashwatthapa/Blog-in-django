@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>Posts by {{ user.username }}</h1>
+
+    <div class="container mt-5">
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-12 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.description }}</p>
+                            <p class="card-text"><small class="text-muted">Posted by: {{ post.author.username }}</small></p>
+                            <hr>
+                            <a href="{% url 'posts_by_user' post.author.username %}" class="btn btn-link">View more posts from this user</a>
+
+                            {% if request.user == post.author %}
+                                <a href="{% url 'delete' post.id %}" class="btn btn-danger">Delete</a>
+                                <a href="{% url 'update' post.id %}" class="btn btn-info">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No posts by this user.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Back to all posts</a>
+{% endblock %}

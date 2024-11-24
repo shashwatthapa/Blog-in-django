@@ -18,7 +18,8 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ items.title }}</h5>
                         <p class="card-text">{{ items.description }}</p>
-                        <p class="card-text">Posted by : {{ items.author.username }}</p>
+                        <a href="{% url 'posts_by_user' items.author.username %}">
+                        <p class="card-text">Posted by : {{ items.author.username }}</p></a>
                     {% if request.user == items.author %}
                         <a href="{% url 'delete' items.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
                        <a href="{% url  'update' items.id %}"><button type="button" class="btn btn-info">Edit</button></a>
