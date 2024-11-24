@@ -41,6 +41,7 @@ def logout_views(request):
     logout(request)
     return redirect('login')
     
+@login_required
 def add(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -51,11 +52,13 @@ def add(request):
         form = PostForm()
         return render(request,'add.html',{'form':form})
 
+@login_required
 def delete(request,id):
     mem = get_object_or_404(Post,id=id)
     mem.delete()
     return redirect('dashboard')
 
+@login_required
 def update(request,id):
     mem = get_object_or_404(Post,id=id)
     if request.method == 'POST':
