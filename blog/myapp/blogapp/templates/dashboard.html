@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if request.user.is_authenticated %}
+<nav class="navbar navbar-light bg-primary">
+    <form class="form-inline ml-auto">
+        <a href="{% url 'add' %}"><button type="button" class="btn btn-light mr-3">Add post</button></a> 
+        <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger">Logout</button></a>
+    </form>
+</nav>
+
+  
+    <div class="container mt-5">
+        <div class="row">
+            {% for items in mem %}
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ items.title }}</h5>
+                        <p class="card-text">{{ items.description }}</p>
+                        <a href="{% url 'delete' items.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+                       <a href="{% url  'update' items.id %}"><button type="button" class="btn btn-info">Edit</button></a>
+
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
